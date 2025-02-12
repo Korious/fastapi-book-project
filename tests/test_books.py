@@ -50,3 +50,20 @@ def test_delete_book():
 
     response = client.get("/books/3")
     assert response.status_code == 404
+
+#Test: if get_book_by_id is valid
+def test_get_book_by_id():
+    response = client.get("/books/2")
+    assert response.status_code == 200
+    assert response.json() == {
+        "id": 2,
+        "title": "The Lord of the Rings",
+        "author": "J.R.R. Tolkien",
+        "publication_year": 1954,
+        "genre": "FANTASY",
+    }
+
+#Test: if get_book_by_id is not valid
+response = client.get("/books/999")
+assert response.status_code == 404
+assert response.json() == {"detail":"Book not found"}
