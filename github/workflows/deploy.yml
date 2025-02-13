@@ -37,3 +37,4 @@ jobs:
       - name: Deploy to Google Compute Engine
         run: |
           gcloud compute ssh --zone "us-central1-a" "fastapi-book-project" --project "upbeat-polygon-450719-a6" --command "cd /home/your-user/fastapi-book-project && git pull && sudo systemctl restart fastapi-app"
+        
