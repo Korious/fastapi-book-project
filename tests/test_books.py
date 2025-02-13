@@ -60,7 +60,42 @@ def test_get_book_by_id():
         "title": "The Lord of the Rings",
         "author": "J.R.R. Tolkien",
         "publication_year": 1954,
-        "genre": "FANTASY",
+         pytest
+======================= test session starts =======================
+platform win32 -- Python 3.11.2, pytest-8.3.4, pluggy-1.5.0
+rootdir: C:\Users\DELL\Documents\Code\fastapi-book-project
+plugins: anyio-4.8.0
+collected 6 items                                                  
+
+tests\test_books.py .....F                                   [100%]
+
+============================ FAILURES =============================
+_______________________ test_get_book_by_id _______________________
+
+    def test_get_book_by_id():
+        response = client.get("/books/2")
+        assert response.status_code == 200
+>       assert response.json() == {
+            "id": 2,
+            "title": "The Lord of the Rings",
+            "author": "J.R.R. Tolkien",
+            "publication_year": 1954,
+            "genre": "FANTASY",
+        }
+E       AssertionError: assert {'author': 'J...r': 1954, ...} == {'a
+uthor': 'J...r': 1954, ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'genre': 'Fantasy'} != {'genre': 'FANTASY'}
+E         Use -v to get more diff
+
+tests\test_books.py:58: AssertionError
+===================== short test summary info =====================
+FAILED tests/test_books.py::test_get_book_by_id - AssertionError: as
+sert {'author': 'J...r': 1954, ...} == {'auth...
+================== 1 failed, 5 passed in 15.39s ===================
+PS C:\Users\DELL\Documents\Code\fastapi-book-project>
     }
 
 #Test: if get_book_by_id is not valid
