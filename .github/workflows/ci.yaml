@@ -1,4 +1,4 @@
-name: Deploy to Google Cloud
+name: CI Pipeline
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 30  # Set a timeout for the job
+    timeout-minutes: 10  # Reduced timeout to 10 minutes
 
     steps:
       - name: Checkout code
@@ -32,6 +32,15 @@ jobs:
         run: |
           echo "Current directory: $(pwd)"
           ls -la
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test  # Ensure the deploy job runs only if the test job succeeds
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
