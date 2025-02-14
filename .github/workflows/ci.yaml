@@ -6,9 +6,9 @@ on:
       - main
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
-    timeout-minutes: 10  # Set a timeout for the job
+    timeout-minutes: 30  # Set a timeout for the job
 
     steps:
       - name: Checkout code
@@ -26,7 +26,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest /tests
+          pytest /tests --maxfail=1 --disable-warnings -v
 
       - name: Debugging
         run: |
