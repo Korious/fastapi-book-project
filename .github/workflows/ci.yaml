@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 10  # Set a timeout of 10 minutes
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v3
@@ -28,3 +28,23 @@ jobs:
         run: |
           source venv/bin/activate
           pytest --maxfail=1 --disable-warnings -v
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Deploy to Google Cloud
+        run: |
+          gcloud config set project upbeat-polygon-450719-a6
+          gcloud app deploy --quiet
