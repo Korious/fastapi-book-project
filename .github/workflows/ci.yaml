@@ -48,3 +48,9 @@ jobs:
         run: |
           gcloud config set project upbeat-polygon-450719-a6
           gcloud app deploy --quiet
+
+      - name: Verify Deployment
+        run: |
+          DEPLOYMENT_URL=$(gcloud app describe --format="value(defaultHostname)")
+          echo "Deployment URL: https://${DEPLOYMENT_URL}"
+          curl -I "https://${DEPLOYMENT_URL}/stage2"
